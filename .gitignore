@@ -1,0 +1,17 @@
+# Ignore compiled binaries
+*.exe
+*.dll
+
+# Ignore IDE-specific files and directories
+.vscode/
+.idea/
+
+# Ignore dependencies
+node_modules/
+venv/
+.venv/
+opencv-master/
+
+# Ignore configuration files with sensitive data
+config.json
+.env
