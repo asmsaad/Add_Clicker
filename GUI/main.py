@@ -199,8 +199,11 @@ for tab_name in app_tab_list:
     
     # main_tab_frame.pack(side=RIGHT, expand=False)
 
-# Default Tab
+# Default Selected Tab
+get_current_selected_tab("main")
 tab_working_frame["main"].pack(side=RIGHT, expand=False)
+
+
 
 # main_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
 
