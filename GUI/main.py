@@ -125,6 +125,9 @@ def get_current_selected_tab(tab_name):
                 foreground=GUI_SETTINGS["c"]["body"]["tabs"]["b"]["afg"],
                 state="disabled"
             )
+            #Display Tab
+            tab_working_frame[each_tab_name].pack(side=RIGHT, expand=False)
+            
         else:
             print("x ", each_tab_name)
             app_tab_widges[each_tab_name].configure(
@@ -134,6 +137,9 @@ def get_current_selected_tab(tab_name):
                 activeforeground=GUI_SETTINGS["c"]["body"]["tabs"]["b"]["afg"],
                 state="normal"
             )
+            
+            #Disappear Tab
+            tab_working_frame[each_tab_name].pack_forget()
 
 
 for index, each_tab_name in enumerate(app_tab_list):
@@ -173,12 +179,37 @@ Label(
 
 
 
-# fingerprints_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
-# proxy_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
+tab_working_frame = {}
+for tab_name in app_tab_list:
+    tab_name = tab_name.lower()
+    tab_working_frame[tab_name] = Frame( working_body_frame, background=GUI_SETTINGS["c"]["body"]["work"]["bg"], width=GUI_SETTINGS["d"]["body"]["work"]["width"], height=GUI_SETTINGS["d"]["body"]["work"]["height"], border=0, borderwidth=0,highlightthickness=0)
+    
+    if tab_name == "main": main_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
+    elif tab_name == "visits": visits_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
+    elif tab_name == "emulation": emulation_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
+    elif tab_name == "proxy": proxy_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
+    #
+    elif tab_name == "profiles": main_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
+    
+    elif tab_name == "fingerprints": fingerprints_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
+    
+    #
+    elif tab_name == "captcha": main_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
+    elif tab_name == "timeouts": main_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
+    
+    # main_tab_frame.pack(side=RIGHT, expand=False)
+
+# Default Tab
+tab_working_frame["main"].pack(side=RIGHT, expand=False)
+
 # main_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
-# visits_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
-emulation_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
-# print(GUI_SETTINGS["d"]["body"]["work"])
+
+# # fingerprints_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
+# # proxy_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
+# # main_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
+# # visits_tab(working_body_frame,GUI_SETTINGS["d"]["body"]["work"])
+# emulation_tab(fingerprints_tab_frame,GUI_SETTINGS["d"]["body"]["work"])
+# # print(GUI_SETTINGS["d"]["body"]["work"])
 
 
 def on_file_option1():
