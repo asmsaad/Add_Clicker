@@ -235,9 +235,14 @@ def main_tab(base_frame, dimension):
             "file_name" : "",
             "query" : "",
             "excludes_text" : "",
+            # "browser_count" : "",
+            # "Threads (Proxy required)" : "",
+            "Wait between runs (Sec.)" : "0"
+        }
+
+        command_text2 = {
             "browser_count" : "",
             "Threads (Proxy required)" : "",
-            "Wait between runs (Sec.)" : "0"
         }
 
         
@@ -245,9 +250,9 @@ def main_tab(base_frame, dimension):
 
         #Loop ? / !
         if selected_param_data["Run in Loop"] == "No":
-            command_text["file_name"] = "python ./res2/ad_clicker.py"
+            command_text["file_name"] = "python ad_clicker.py"
         else:
-            command_text["file_name"] = "python ./res2/run_in_loop.py"
+            command_text["file_name"] = "python run_in_loop.py"
 
         # Search Query
         if os.path.isfile(str(selected_param_data["Keywords"]).strip()):
@@ -256,10 +261,10 @@ def main_tab(base_frame, dimension):
             command_text["query"] = '-q "'+ str(selected_param_data['Keywords']).strip() + '"'
 
         # Browser Count
-        command_text["browser_count"] = f'-bc {str(selected_param_data["Browser count (Proxy required)"]).strip()}'
+        command_text2["browser_count"] = f'-bc {str(selected_param_data["Browser count (Proxy required)"]).strip()}'
 
         # Multiprocess style
-        command_text["Threads (Proxy required)"] = f"-ms {str(selected_param_data['Threads (Proxy required)']).strip()}"
+        command_text2["Threads (Proxy required)"] = f"-ms {str(selected_param_data['Threads (Proxy required)']).strip()}"
 
         # Exclude Word
         if os.path.isfile(str(selected_param_data["Domains that will be ignored"]).strip()):
@@ -284,8 +289,23 @@ def main_tab(base_frame, dimension):
         generated_command = []
         for each_command in command_text:
             generated_command.append(command_text[each_command])
+
+        generated_command2 = []
+        for each_command in command_text2:
+            generated_command2.append(command_text2[each_command])
         
-        return " ".join(generated_command)
+
+        # print(" ".join(generated_command))
+        # print(" ".join(generated_command2))
+
+
+        # return " ".join(generated_command)
+        generated_command1_and_2 = {
+        "Main" : " ".join(generated_command),
+        "Proxy required" : " ".join(generated_command2),
+        }
+        
+        return generated_command1_and_2
         
                 
             
@@ -294,7 +314,11 @@ def main_tab(base_frame, dimension):
     def store_instruction():
         # print(json.dumps(selected_param_data, indent=4))  
         # print('>>> ',making_instruction(), '<<<')
-        update_command_log("Main",making_instruction())
+        # update_command_log("Main",making_instruction())
+        command = making_instruction()
+        update_command_log("Main",command["Main"])
+        update_command_log("Proxy required",command["Proxy required"])
+        # print(command)
                       
                         
                     

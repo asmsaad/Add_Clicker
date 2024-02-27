@@ -1,7 +1,7 @@
 {
-    "Main": "python ./res2/run_in_loop.py -q \"\"  -bc 5 -ms 1 ",
-    "Proxy": "",
-    "Proxy required": "",
+    "Main": "python ./res2/run_in_loop.py -q \"test\"  ",
+    "Proxy": "-p FreeProxyList.net",
+    "Proxy required": "-bc 5 -ms 1",
     "Emulation": "",
     "Fingerprints": "",
     "Utility": " "

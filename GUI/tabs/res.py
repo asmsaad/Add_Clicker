@@ -61,7 +61,7 @@ def making_run_command():
     run_command = " ".join(run_command)
     print(run_command)
 
-
+    print('>>',os.getcwd())
     os.system(run_command)
 
 
