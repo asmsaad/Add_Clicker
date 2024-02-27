@@ -1,0 +1,8 @@
+{
+    "Main": "python ad_clicker.py -q \"tes\"  ",
+    "Proxy": "",
+    "Proxy required": "-bc 5 -ms 1",
+    "Emulation": "",
+    "Fingerprints": "",
+    "Utility": " --headless"
+}
