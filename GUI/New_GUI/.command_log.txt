@@ -1,8 +1,8 @@
 {
-    "Main": "python ad_clicker.py -q \"Pen\"  ",
+    "Main": "python ad_clicker.py -q \"test\"  ",
     "Proxy": "",
     "Proxy required": "-bc 5 -ms 1",
     "Emulation": "",
     "Fingerprints": "",
-    "Utility": " "
+    "Utility": ""
 }

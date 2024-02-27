@@ -86,6 +86,8 @@ def making_run_command():
         run_command.append(DATA_COMMAND[each_command_unit])
 
     run_command = " ".join(run_command)
+    
+    print('>>',os.getcwd())
     print(run_command)
 
     print('>>',os.getcwd())

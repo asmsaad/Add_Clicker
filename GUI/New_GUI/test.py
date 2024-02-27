@@ -1,34 +1,43 @@
-import tkinter as tk
-import re
+from tkinter import *
+from tkinter import scrolledtext
+import re, time
+from threading import Thread
 
-def highlight_info(event):
-    text.tag_configure("info", foreground="#405db1" ,  font=("Helvetica", 8, "bold"))  # Configure tag for highlighting
+global LAST_LINE 
+LAST_LINE = 0
+
+global text
+
+
+def highlight_info():
+    #INFO
+    text.tag_configure("info", foreground="#3e7cba", font=("Consolas", 10, "bold"))  # Configure tag for highlighting
     text.mark_set("matchStart", "1.0")
     text.mark_set("matchEnd", "1.0")
-    # text.tag_remove("info", "1.0", "end")  # Remove previous highlights
 
     while True:
-        pos = text.search(r"[ INFO]", "matchEnd", stopindex="end")
+        pos = text.search(r"[ INFO]"+' ', "matchEnd", stopindex="end")
         if not pos:
             break
         text.mark_set("matchStart", pos)
         text.mark_set("matchEnd", f"{pos}+6c")  # Move to end of matched pattern
         text.tag_add("info", "matchStart", "matchEnd")
 
-    text.tag_configure("debug", foreground="orange" , font=("Helvetica", 8, "bold"))  # Configure tag for highlighting
+    text.tag_configure("debug", foreground="#ae673e", font=("Consolas", 10, "bold"))  # Configure tag for highlighting
     text.mark_set("matchStart", "1.0")
     text.mark_set("matchEnd", "1.0")
 
+
+    #DEBUG
     while True:
         pos = text.search(r"[DEBUG]"+' ', "matchEnd", stopindex="end")
         if not pos:
             break
         text.mark_set("matchStart", pos)
-        text.mark_set("matchEnd", f"{pos}+6c")  # Move to end of matched pattern
+        text.mark_set("matchEnd", f"{pos}+7c")  # Move to end of matched pattern
         text.tag_add("debug", "matchStart", "matchEnd")
 
-    
-    text.tag_configure("error", foreground="red" , font=("Helvetica", 8, "bold"))  # Configure tag for highlighting
+    text.tag_configure("error", foreground="red", font=("Consolas", 10, "bold"))  # Configure tag for highlighting
     text.mark_set("matchStart", "1.0")
     text.mark_set("matchEnd", "1.0")
 
@@ -37,11 +46,12 @@ def highlight_info(event):
         if not pos:
             break
         text.mark_set("matchStart", pos)
-        text.mark_set("matchEnd", f"{pos}+6c")  # Move to end of matched pattern
+        text.mark_set("matchEnd", f"{pos}+7c")  # Move to end of matched pattern
         text.tag_add("error", "matchStart", "matchEnd")
 
 
-    text.tag_configure("datetime", foreground="#c5ebe8" , font=("Helvetica", 8, "bold"))  # Configure tag for highlighting
+    #DATE TIME
+    text.tag_configure("datetime", foreground="#5e9148", font=("Consolas", 10, "bold"))  # Configure tag for highlighting
     text.mark_set("matchStart", "1.0")
     text.mark_set("matchEnd", "1.0")
     text.tag_remove("datetime", "1.0", "end")  # Remove previous highlights
@@ -54,15 +64,60 @@ def highlight_info(event):
         text.mark_set("matchEnd", f"{pos}+19c")  # Move to end of matched pattern
         text.tag_add("datetime", "matchStart", "matchEnd")
 
-root = tk.Tk()
-root.title("Highlighting '[INFO]' in Text Widget")
 
-text = tk.Text(root, wrap="word", bg="#1f1f1f", foreground="#4c4c4c" , font=("Helvetica", 8, "bold"))
-text.pack(expand=True, fill="both")
 
-text.insert("end", "This is a sample text. [INFO] This part will be highlighted.\n")
 
-# Bind the highlight_info function to the KeyRelease event
-text.bind("<KeyRelease>", highlight_info)
 
-root.mainloop()
+
+def terminal_log_view(base_frame):
+    global text
+    # Create a scrolled text widget with a vertical scrollbar
+    text = scrolledtext.ScrolledText(base_frame, wrap="word", bg="#1f1f1f", foreground="#aeabae", font=("Consolas", 10, "normal"))
+    text.pack(expand=True, fill="both")
+
+
+    thread = Thread(target=update_log_terminal, args=())
+    thread.start()
+
+
+
+
+
+def update_log_terminal():
+    global text
+    global LAST_LINE 
+
+    while True:
+        with open("adclicker.log", 'br') as RF:
+            data = RF.read().decode('utf-8')  # Change 'utf-8' to the appropriate encoding if needed
+        RF.close()
+
+        data_ = data.split('\n')
+        LAST_LINE_ = len(data_)
+
+        
+
+        # print(LAST_LINE , LAST_LINE_)
+   
+
+        if LAST_LINE_ != LAST_LINE:
+            text.delete("1.0", "end")
+            text.insert("end", '\n'.join(data_))
+            highlight_info()
+            text.yview_moveto(1.0)
+
+            LAST_LINE = LAST_LINE_
+
+        time.sleep(2.5)
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    root = Tk()
+
+    terminal_log_view(root)
+    root.mainloop()

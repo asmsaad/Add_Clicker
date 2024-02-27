@@ -22,16 +22,16 @@ evdekilerden saklanan
 """
 
 from pathlib import Path
+from selenium.webdriver import ChromeOptions
+# try:
+#     from selenium.webdriver import ChromeOptions
+# except ImportError:
+#     import sys
 
-try:
-    from selenium.webdriver import ChromeOptions
-except ImportError:
-    import sys
+#     packages_path = Path.cwd() / "env" / "Lib" / "site-packages"
+#     sys.path.insert(0, f"{packages_path}")
 
-    packages_path = Path.cwd() / "env" / "Lib" / "site-packages"
-    sys.path.insert(0, f"{packages_path}")
-
-    from selenium.webdriver import ChromeOptions
+#     from selenium.webdriver import ChromeOptions
 
 
 def get_proxies(proxy_file: Path) -> list[str]:

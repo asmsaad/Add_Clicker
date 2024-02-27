@@ -120,7 +120,7 @@ app_tab_list = [
     # "Captcha",
     # "Timeouts",
     # "Timeouts",
-    'Utility',
+    'Others',
 ]
 
 selected_tab = app_tab_list[0].lower()
@@ -208,7 +208,7 @@ for tab_name in app_tab_list:
     elif tab_name == "captcha": main_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
     elif tab_name == "timeouts": main_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
 
-    elif tab_name == "utility": utility_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
+    elif tab_name == "Others": utility_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
     
     # main_tab_frame.pack(side=RIGHT, expand=False)
 
@@ -228,50 +228,50 @@ tab_working_frame["main"].pack(side=RIGHT, expand=False)
 # # print(GUI_SETTINGS["d"]["body"]["work"])
 
 
-def on_file_option1():
-    print("File > Option 1 clicked")
+# def on_file_option1():
+#     print("File > Option 1 clicked")
 
 
-def on_file_option2():
-    print("File > Option 2 clicked")
+# def on_file_option2():
+#     print("File > Option 2 clicked")
 
 
-def on_file_option3():
-    print("File > Option 3 clicked")
+# def on_file_option3():
+#     print("File > Option 3 clicked")
 
 
-def on_settings_option43_task1():
-    print("Settings > Option 43 > Task 1 clicked")
+# def on_settings_option43_task1():
+#     print("Settings > Option 43 > Task 1 clicked")
 
 
-def on_settings_option43_task2():
-    print("Settings > Option 43 > Task 2 clicked")
+# def on_settings_option43_task2():
+#     print("Settings > Option 43 > Task 2 clicked")
 
 
-def on_settings_option55():
-    print("Settings > Option 55 clicked")
+# def on_settings_option55():
+#     print("Settings > Option 55 clicked")
 
 
-menubar = Menu(root)
+# menubar = Menu(root)
 
-# File Menu
-file_menu = Menu(menubar, tearoff=0, bg="blue")
-file_menu.add_command(label="Option 1", command=on_file_option1)
-file_menu.add_command(label="Option 2", command=on_file_option2)
-file_menu.add_command(label="Option 3", command=on_file_option3)
-menubar.add_cascade(label="File", menu=file_menu)
+# # File Menu
+# file_menu = Menu(menubar, tearoff=0, bg="blue")
+# file_menu.add_command(label="Option 1", command=on_file_option1)
+# file_menu.add_command(label="Option 2", command=on_file_option2)
+# file_menu.add_command(label="Option 3", command=on_file_option3)
+# menubar.add_cascade(label="File", menu=file_menu)
 
-# Settings Menu
-settings_menu = Menu(menubar, tearoff=0)
-option43_menu = Menu(settings_menu, tearoff=0)
-option43_menu.add_command(label="Task 1", command=on_settings_option43_task1)
-option43_menu.add_command(label="Task 2", command=on_settings_option43_task2)
-settings_menu.add_cascade(label="Option 43", menu=option43_menu)
-settings_menu.add_command(label="Option 55", command=on_settings_option55)
-menubar.add_cascade(label="Settings", menu=settings_menu)
+# # Settings Menu
+# settings_menu = Menu(menubar, tearoff=0)
+# option43_menu = Menu(settings_menu, tearoff=0)
+# option43_menu.add_command(label="Task 1", command=on_settings_option43_task1)
+# option43_menu.add_command(label="Task 2", command=on_settings_option43_task2)
+# settings_menu.add_cascade(label="Option 43", menu=option43_menu)
+# settings_menu.add_command(label="Option 55", command=on_settings_option55)
+# menubar.add_cascade(label="Settings", menu=settings_menu)
 
 
-root.config(menu=menubar)
+# root.config(menu=menubar)
 
 
 # Footer
@@ -281,50 +281,52 @@ footer_right_frame = Frame(footer_frame, background=GUI_SETTINGS["c"]["footer"][
 footer_right_frame.pack(side=RIGHT, pady=7)
 
 
-restart_BTN = Button(
-    footer_left_frame,
-    text="Restart",
-    width=15,
-    height=10,
-    font=GUI_SETTINGS["f"]["footer"],
-    # relief=SUNKEN,
-    background="#ffc926",
-    foreground="#997917",
-    activebackground="#e6b522",
-    activeforeground="#66500f",
-    border=0, borderwidth=0,highlightthickness=0
-)
-restart_BTN.pack(side=LEFT, padx=5, pady=0)
-scheduler_BTN = Button(
-    footer_left_frame,
-    text="Scheduler",
-    width=15,
-    height=10,
-    font=GUI_SETTINGS["f"]["footer"],
-    # relief=SUNKEN,
-    background="#14489b",
-    foreground="#0a244e",
-    activebackground='#103a7c',
-    activeforeground='#040e1f',
-    border=0, borderwidth=0,highlightthickness=0
-)
-scheduler_BTN.pack(side=RIGHT, padx=5, pady=0)
+# restart_BTN = Button(
+#     footer_left_frame,
+#     text="Restart",
+#     width=15,
+#     height=10,
+#     font=GUI_SETTINGS["f"]["footer"],
+#     # relief=SUNKEN,
+#     background="#ffc926",
+#     foreground="#997917",
+#     activebackground="#e6b522",
+#     activeforeground="#66500f",
+#     border=0, borderwidth=0,highlightthickness=0
+# )
+# restart_BTN.pack(side=LEFT, padx=5, pady=0)
+# scheduler_BTN = Button(
+#     footer_left_frame,
+#     text="Scheduler",
+#     width=15,
+#     height=10,
+#     font=GUI_SETTINGS["f"]["footer"],
+#     # relief=SUNKEN,
+#     background="#14489b",
+#     foreground="#0a244e",
+#     activebackground='#103a7c',
+#     activeforeground='#040e1f',
+#     border=0, borderwidth=0,highlightthickness=0
+# )
+# scheduler_BTN.pack(side=RIGHT, padx=5, pady=0)
+
+# cancel_BTN = Button(
+#     footer_right_frame,
+#     text="Cancel",
+#     width=15,
+#     height=10,
+#     font=GUI_SETTINGS["f"]["footer"],
+#     # relief=SUNKEN,
+#     background="#fe6464",
+#     foreground="#7f3838",
+#     activebackground='#e55a5a',
+#     activeforeground='#7f3232',
+#     border=0, borderwidth=0,highlightthickness=0
+# )
+# cancel_BTN.pack(side=LEFT, padx=5, pady=0)
+
 
 ok_BTN = Button(
-    footer_right_frame,
-    text="Cancel",
-    width=15,
-    height=10,
-    font=GUI_SETTINGS["f"]["footer"],
-    # relief=SUNKEN,
-    background="#fe6464",
-    foreground="#7f3838",
-    activebackground='#e55a5a',
-    activeforeground='#7f3232',
-    border=0, borderwidth=0,highlightthickness=0
-)
-ok_BTN.pack(side=LEFT, padx=5, pady=0)
-cancel_BTN = Button(
     footer_right_frame,
     text="Ok",
     width=15,
@@ -338,7 +340,7 @@ cancel_BTN = Button(
     border=0, borderwidth=0,highlightthickness=0,
     command= making_run_command
 )
-cancel_BTN.pack(side=RIGHT, padx=5, pady=0)
+ok_BTN.pack(side=RIGHT, padx=5, pady=0)
 
 
 icon_img = Image.open("res/tap.png")
