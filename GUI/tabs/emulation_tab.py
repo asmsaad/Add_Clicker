@@ -219,7 +219,10 @@ def emulation_tab(base_frame, dimension):
         
         
     def making_instruction(): 
-        return f"-l {selected_param_data['Max. scroll Limit (0 for scroll untill end)']}"
+        if str(selected_param_data['Max. scroll Limit (0 for scroll untill end)']).strip() == "0":
+            return ""
+        else:
+            return f"-l {selected_param_data['Max. scroll Limit (0 for scroll untill end)']}"
         
      
             

@@ -1,0 +1,15 @@
+env/
+docs/
+images/
+.github/
+assets/
+__pycache__/
+proxy_auth_plugin/
+
+.git
+.cache
+
+*.log
+*.md
+*.db
+*.un~

@@ -17,7 +17,7 @@ a={
 
 tab_details = {
     "main": {
-        "Run in Loop": {"type": "cb", "values": ["Yes","No"], "default": "No"},
+        "Run in Loop": {"type": "cb", "values": ["Yes","No"], "default": "Yes"},
         # "Mode": {"type": "cb", "values": ["Any sites"], "default": "Any sites"},
         "Keywords" : {"type": "entry","browse":True,"browse_file_type":'',"initial_loc":"./../../"},
         # "Chance of error %" : {"type": "sb", "default": "1" , "from":'0', 'to': '100'},
@@ -26,8 +26,8 @@ tab_details = {
         # "Click option": {"type": "cb", "values": ["Google Shope + Context"], "default": "Google Shope + Context"},
         # "Click on the phone number": {"type": "cb", "values": ["Yes", "No"], "default": "No"},
         "Wait between runs (Sec.)" : {"type": "sb", "default": "0", "from":'0', 'to': '1000'},
-        "Browser count" : {"type": "sb", "default": "5", "from":'5', 'to': '20'},
-        "Threads" : {"type": "sb", "default": "1", "from":'1', 'to': '2'}
+        "Browser count (Proxy required)" : {"type": "sb", "default": "5", "from":'5', 'to': '20'},
+        "Threads (Proxy required)" : {"type": "sb", "default": "1", "from":'1', 'to': '2'}
     }
 }
 
@@ -79,12 +79,12 @@ GUI_SETTINGS = {
 def main_tab(base_frame, dimension):
     
     selected_param_data = {
-        "Run in Loop": "No",
+        "Run in Loop": "Yes",
         "Keywords" : "",
         "Domains that will be ignored" : "",
         "Wait between runs (Sec.)" : "0",
-        "Browser count": "5",
-        "Threads" : "1"
+        "Browser count (Proxy required)": "5",
+        "Threads (Proxy required)" : "1"
         
     }
     
@@ -197,9 +197,12 @@ def main_tab(base_frame, dimension):
                         if  tab_details["main"][each_options]['browse'] == True:
                             main_tab_widgets[each_options + "_entry_browse_btn"].grid_forget()
                             
-    def proxy_enable_disable_EL(e,selected_data):
+    def run_in_Loop_EL(e,selected_data):
         selected_data = selected_data.get()
-        proxy_enable_disable(selected_data)  
+        if selected_data == 'Yes' :
+            pass
+        else:
+            pass
         
         
         
@@ -223,8 +226,8 @@ def main_tab(base_frame, dimension):
         #     "Run in Loop": "No",
         #     "Keywords" : "",
         #     "Domains that will be ignored" : "",
-        #     "Browser count": "5",
-        #     "Threads" : "1"
+        #     "Browser count (Proxy required)": "5",
+        #     "Threads (Proxy required)" : "1"
         # }
 
         
@@ -233,17 +236,18 @@ def main_tab(base_frame, dimension):
             "query" : "",
             "excludes_text" : "",
             "browser_count" : "",
-            "threads" : "",
+            "Threads (Proxy required)" : "",
             "Wait between runs (Sec.)" : "0"
-
         }
+
+        
 
 
         #Loop ? / !
         if selected_param_data["Run in Loop"] == "No":
-            command_text["file_name"] = "python ad_clicker.py"
+            command_text["file_name"] = "python ./res2/ad_clicker.py"
         else:
-            command_text["file_name"] = "python run_in_loop.py"
+            command_text["file_name"] = "python ./res2/run_in_loop.py"
 
         # Search Query
         if os.path.isfile(str(selected_param_data["Keywords"]).strip()):
@@ -252,10 +256,10 @@ def main_tab(base_frame, dimension):
             command_text["query"] = '-q "'+ str(selected_param_data['Keywords']).strip() + '"'
 
         # Browser Count
-        command_text["browser_count"] = f'-bc {str(selected_param_data["Browser count"]).strip()}'
+        command_text["browser_count"] = f'-bc {str(selected_param_data["Browser count (Proxy required)"]).strip()}'
 
         # Multiprocess style
-        command_text["threads"] = f"-ms {str(selected_param_data['Threads']).strip()}"
+        command_text["Threads (Proxy required)"] = f"-ms {str(selected_param_data['Threads (Proxy required)']).strip()}"
 
         # Exclude Word
         if os.path.isfile(str(selected_param_data["Domains that will be ignored"]).strip()):
@@ -346,9 +350,9 @@ def main_tab(base_frame, dimension):
             # Placement
             main_tab_widgets[each_options + "_cb"].grid(row=index, column=2, ipadx=0)
 
-            # Actions
-            # if each_options == 'Use proxy':
-            #     # main_tab_widgets[each_options+"_cb"].bind("<<ComboboxSelected>>", lambda e , selected_data = main_tab_widgets[each_options + "_cb"] :proxy_enable_disable_EL(e,selected_data))
+            # # Actions
+            # if each_options == "Run in Loop":
+            #     main_tab_widgets[each_options+"_cb"].bind("<<ComboboxSelected>>", lambda e , selected_data = main_tab_widgets[each_options + "_cb"] : run_in_Loop_EL(e,selected_data))
             # else:
             main_tab_widgets[each_options+"_cb"].bind("<<ComboboxSelected>>", lambda e , selected_data = main_tab_widgets[each_options + "_cb"], data_name=each_options :widget_selected_value_EL(e,selected_data,data_name))
 

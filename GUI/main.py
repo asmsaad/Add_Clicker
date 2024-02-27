@@ -335,7 +335,8 @@ cancel_BTN = Button(
     foreground="#125d41",
     activebackground='#20a775',
     activeforeground='#166f4e',
-    border=0, borderwidth=0,highlightthickness=0
+    border=0, borderwidth=0,highlightthickness=0,
+    command= making_run_command
 )
 cancel_BTN.pack(side=RIGHT, padx=5, pady=0)
 

@@ -176,7 +176,9 @@ def fingerprints_tab(base_frame, dimension):
     def store_instruction():
         # print(json.dumps(selected_param_data, indent=4))  
         # print('>>> ',f'-fpm {str(fingerprints_widgets["mobile_percentage_cb"].get())} -fpd {str(fingerprints_widgets["desktop_percentage_cb"].get())}', '<<<')
-        update_command_log("Fingerprints",f'-fpm {str(fingerprints_widgets["mobile_percentage_cb"].get())} -fpd {str(fingerprints_widgets["desktop_percentage_cb"].get())}')
+        # update_command_log("Fingerprints",f'-fpm {str(fingerprints_widgets["mobile_percentage_cb"].get())} -fpd {str(fingerprints_widgets["desktop_percentage_cb"].get())}')
+        pass
+
 
     fingerprints_widgets["percentage_frame"] = Frame(
         fingerprints_tab_frame,
