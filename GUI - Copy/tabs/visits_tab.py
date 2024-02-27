@@ -3,29 +3,30 @@ from tkinter import filedialog
 from tkinter import ttk
 from PIL import Image, ImageTk
 import os,json
-from tabs.res import *
 
 # tab_details = {
 #     "fingerprints": {"Device types": ["Mobile + Desktop", "Desktop", "Mobile"]}
 # }
 
 
+a={
+    
+    "Depth of view              Minimum Value" : {"type": "sb", "default": "1" , "from":'0', 'to': '100'},
+    "Depth of view              Maximum Value" : {"type": "sb", "default": "3" , "from":'0', 'to': '100'},
+    
+    "Page view time (sec)       Minimum Value" : {"type": "sb", "default": "10" , "from":'0', 'to': '100'},
+    "Page view time (sec)       Maximum Value" : {"type": "sb", "default": "30" , "from":'0', 'to': '100'},
+    
+}
+
+
 tab_details = {
-    "proxy": {
-        "Use proxy": {"type": "cb", "values": ["Yes", "No"], "default": "No"},
-        "Proxy format": {
-            "type": "cb",
-            "values": ["host:port", "username:password@host:port"],
-            "default": "host:port",
-        },
-        "Proxy type": {"type": "cb", "values": ["http"], "default": "http"},
-        "Proxy with rotation": {
-            "type": "cb",
-            "values": ["Yes", "No"],
-            "default": "Yes",
-        },
-        "Waiting after an IP change (sec.)": {"type": "sb", "default": "10"},
-        "Proxy": {"type": "entry","browse":True,"browse_file_type":'',"initial_loc":"./../../"},
+    "visits_tab": {
+        "Depth of view              Minimum Value" : {"type": "sb", "default": "1" , "from":'0', 'to': '100'},
+        "Depth of view              Maximum Value" : {"type": "sb", "default": "3" , "from":'0', 'to': '100'},
+        
+        "Page view time (sec)       Minimum Value" : {"type": "sb", "default": "10" , "from":'0', 'to': '100'},
+        "Page view time (sec)       Maximum Value" : {"type": "sb", "default": "30" , "from":'0', 'to': '100'},
     }
 }
 
@@ -74,15 +75,14 @@ GUI_SETTINGS = {
 
 
 # ,width=dimension['width'],height=dimension['height']
-def proxy_tab(base_frame, dimension):
+def visits_tab(base_frame, dimension):
     
     selected_param_data = {
-        "Use proxy": "No",
-        "Proxy format": "host:port",
-        "Proxy type": "http",
-        "Proxy with rotation": "Yes",
-        "Waiting after an IP change (sec.)": 10,
-        "Proxy": '',
+        "Depth of view              Minimum Value" : "1",
+        "Depth of view              Maximum Value" : "3",
+
+        "Page view time (sec)       Minimum Value" : "10",
+        "Page view time (sec)       Maximum Value" : "30",
     }
     
     
@@ -105,16 +105,16 @@ def proxy_tab(base_frame, dimension):
     ).grid(row=0, column=1)
     # Label(fingerprints_tab_frame, background="red", padx=342).grid(row=1, column=0, rowsp)
 
-    proxy_widgets = {}
+    visits_tab_widgets = {}
 
-    proxy_widgets["cb_frame"] = Frame(
+    visits_tab_widgets["cb_frame"] = Frame(
         fingerprints_tab_frame,
         background=GUI_SETTINGS["c"]["body"]["work"]["bg"],
         border=0,
         borderwidth=0,
         highlightthickness=0,
     )
-    proxy_widgets["cb_frame"].grid(row=1, column=1)
+    visits_tab_widgets["cb_frame"].grid(row=1, column=1)
     
     
     
@@ -140,59 +140,59 @@ def proxy_tab(base_frame, dimension):
         store_instruction()
         
         if selected_data == 'Yes':
-            for index, each_options in enumerate(tab_details["proxy"].keys()):
+            for index, each_options in enumerate(tab_details["visits_tab"].keys()):
                 if index != 0:
-                    proxy_widgets[each_options + "_label_placeholder"].grid(row=index, column=1, ipady=5)
-                    proxy_widgets[each_options + "_label"].grid(row=index, column=1, sticky="e", ipadx=10)
+                    visits_tab_widgets[each_options + "_label_placeholder"].grid(row=index, column=1, ipady=5)
+                    visits_tab_widgets[each_options + "_label"].grid(row=index, column=1, sticky="e", ipadx=10)
                      # ComboBox
-                    if tab_details["proxy"][each_options]["type"] == "cb":
+                    if tab_details["visits_tab"][each_options]["type"] == "cb":
                         # Default Value
-                        proxy_widgets[each_options + "_cb"].set(tab_details["proxy"][each_options]["default"])
+                        visits_tab_widgets[each_options + "_cb"].set(tab_details["visits_tab"][each_options]["default"])
                         # Placement
-                        proxy_widgets[each_options + "_cb"].grid(row=index, column=2, ipadx=0)
+                        visits_tab_widgets[each_options + "_cb"].grid(row=index, column=2, ipadx=0)
                     
                     #SpinBox 
-                    elif tab_details["proxy"][each_options]["type"] == "sb":
+                    elif tab_details["visits_tab"][each_options]["type"] == "sb":
                         # Default Value
-                        proxy_widgets[each_options + "_sb"]["state"] = NORMAL
-                        proxy_widgets[each_options + "_sb"].delete( 0, "end")  # Clear any existing value
-                        proxy_widgets[each_options + "_sb"].insert(0, int(tab_details["proxy"][each_options]["default"]))  # Insert the default value
-                        proxy_widgets[each_options + "_sb"]["state"] = "readonly"
+                        visits_tab_widgets[each_options + "_sb"]["state"] = NORMAL
+                        visits_tab_widgets[each_options + "_sb"].delete( 0, "end")  # Clear any existing value
+                        visits_tab_widgets[each_options + "_sb"].insert(0, int(tab_details["visits_tab"][each_options]["default"]))  # Insert the default value
+                        visits_tab_widgets[each_options + "_sb"]["state"] = "readonly"
                         # Placement
-                        proxy_widgets[each_options + "_sb"].grid(row=index, column=2, ipadx=3)
+                        visits_tab_widgets[each_options + "_sb"].grid(row=index, column=2, ipadx=3)
                         
                     #Entry
-                    elif tab_details["proxy"][each_options]["type"] == "entry":   
+                    elif tab_details["visits_tab"][each_options]["type"] == "entry":   
                         # Default Value
-                        proxy_widgets[each_options+"_entry"].delete(0, "end")  # Clear any existing value
-                        proxy_widgets[each_options + "_entry"].grid(row=index, column=2, ipadx=0, sticky=W)
+                        visits_tab_widgets[each_options+"_entry"].delete(0, "end")  # Clear any existing value
+                        visits_tab_widgets[each_options + "_entry"].grid(row=index, column=2, ipadx=0, sticky=W)
                         #Browse 
-                        if  tab_details["proxy"][each_options]['browse'] == True:
-                            proxy_widgets[each_options + "_entry_browse_btn"].grid(row=index, column=2, ipadx=0, sticky=E )
+                        if  tab_details["visits_tab"][each_options]['browse'] == True:
+                            visits_tab_widgets[each_options + "_entry_browse_btn"].grid(row=index, column=2, ipadx=0, sticky=E )
                             
                         
         elif selected_data == 'No':
-            for index, each_options in enumerate(tab_details["proxy"].keys()):
+            for index, each_options in enumerate(tab_details["visits_tab"].keys()):
                 if index != 0:
-                    proxy_widgets[each_options + "_label_placeholder"].grid_forget()
-                    proxy_widgets[each_options + "_label"].grid_forget()
+                    visits_tab_widgets[each_options + "_label_placeholder"].grid_forget()
+                    visits_tab_widgets[each_options + "_label"].grid_forget()
                      # ComboBox
-                    if tab_details["proxy"][each_options]["type"] == "cb":
+                    if tab_details["visits_tab"][each_options]["type"] == "cb":
                         # Placement
-                        proxy_widgets[each_options + "_cb"].grid_forget()
+                        visits_tab_widgets[each_options + "_cb"].grid_forget()
                     
                     #SpinBox 
-                    elif tab_details["proxy"][each_options]["type"] == "sb":
+                    elif tab_details["visits_tab"][each_options]["type"] == "sb":
                         # Placement
-                        proxy_widgets[each_options + "_sb"].grid_forget()
+                        visits_tab_widgets[each_options + "_sb"].grid_forget()
                         
                     #Entry
-                    elif tab_details["proxy"][each_options]["type"] == "entry":   
+                    elif tab_details["visits_tab"][each_options]["type"] == "entry":   
                         # Default Value
-                        proxy_widgets[each_options + "_entry"].grid_forget()
+                        visits_tab_widgets[each_options + "_entry"].grid_forget()
                         #Browse 
-                        if  tab_details["proxy"][each_options]['browse'] == True:
-                            proxy_widgets[each_options + "_entry_browse_btn"].grid_forget()
+                        if  tab_details["visits_tab"][each_options]['browse'] == True:
+                            visits_tab_widgets[each_options + "_entry_browse_btn"].grid_forget()
                             
     def proxy_enable_disable_EL(e,selected_data):
         selected_data = selected_data.get()
@@ -216,7 +216,7 @@ def proxy_tab(base_frame, dimension):
         
         
     def making_instruction(): 
-         
+        return ""
         
         if selected_param_data["Use proxy"] == "No":
             return ""
@@ -241,9 +241,8 @@ def proxy_tab(base_frame, dimension):
                 
                 
     def store_instruction():
-        # print(json.dumps(selected_param_data, indent=4))  
-        # print('>>> ',making_instruction(), '<<<')
-        update_command_log("Proxy",making_instruction())
+        print(json.dumps(selected_param_data, indent=4))  
+        print('>>> ',making_instruction(), '<<<')
                       
                         
                     
@@ -251,10 +250,10 @@ def proxy_tab(base_frame, dimension):
         
     
 
-    for index, each_options in enumerate(tab_details["proxy"].keys()):
+    for index, each_options in enumerate(tab_details["visits_tab"].keys()):
         # PlaceHolder Label
-        proxy_widgets[each_options + "_label_placeholder"] = Label(
-            proxy_widgets["cb_frame"],
+        visits_tab_widgets[each_options + "_label_placeholder"] = Label(
+            visits_tab_widgets["cb_frame"],
             width=28,
             # background="green",
             background=GUI_SETTINGS["c"]["body"]["work"]["bg"],
@@ -263,13 +262,13 @@ def proxy_tab(base_frame, dimension):
             highlightthickness=0,
             font=fonts_["cb"],
         )
-        proxy_widgets[each_options + "_label_placeholder"].grid(
+        visits_tab_widgets[each_options + "_label_placeholder"].grid(
             row=index, column=1, ipady=5
         )
 
         # Label
-        proxy_widgets[each_options + "_label"] = Label(
-            proxy_widgets["cb_frame"],
+        visits_tab_widgets[each_options + "_label"] = Label(
+            visits_tab_widgets["cb_frame"],
             font=fonts_["cb"],
             text=each_options,
             background=GUI_SETTINGS["c"]["body"]["work"]["bg"],
@@ -278,74 +277,74 @@ def proxy_tab(base_frame, dimension):
             highlightthickness=0,
             foreground="white",
         )
-        proxy_widgets[each_options + "_label"].grid(
+        visits_tab_widgets[each_options + "_label"].grid(
             row=index, column=1, sticky="e", ipadx=10
         )
 
         # ComboBox
-        if tab_details["proxy"][each_options]["type"] == "cb":
-            proxy_widgets[each_options + "_cb"] = ttk.Combobox(
-                proxy_widgets["cb_frame"],
+        if tab_details["visits_tab"][each_options]["type"] == "cb":
+            visits_tab_widgets[each_options + "_cb"] = ttk.Combobox(
+                visits_tab_widgets["cb_frame"],
                 width=35,
-                values=tab_details["proxy"][each_options]["values"],
+                values=tab_details["visits_tab"][each_options]["values"],
                 font=fonts_["cb"],
                 state="readonly",
                 background=GUI_SETTINGS["c"]["body"]["work"]["bg"],
             )
             # Default Value
-            proxy_widgets[each_options + "_cb"].set(
-                tab_details["proxy"][each_options]["default"]
+            visits_tab_widgets[each_options + "_cb"].set(
+                tab_details["visits_tab"][each_options]["default"]
             )
             # Placement
-            proxy_widgets[each_options + "_cb"].grid(row=index, column=2, ipadx=0)
+            visits_tab_widgets[each_options + "_cb"].grid(row=index, column=2, ipadx=0)
 
             # Actions
-            if each_options == 'Use proxy':
-                proxy_widgets[each_options+"_cb"].bind("<<ComboboxSelected>>", lambda e , selected_data = proxy_widgets[each_options + "_cb"] :proxy_enable_disable_EL(e,selected_data))
-            else:
-                proxy_widgets[each_options+"_cb"].bind("<<ComboboxSelected>>", lambda e , selected_data = proxy_widgets[each_options + "_cb"], data_name=each_options :widget_selected_value_EL(e,selected_data,data_name))
+            # if each_options == 'Use proxy':
+            #     # visits_tab_widgets[each_options+"_cb"].bind("<<ComboboxSelected>>", lambda e , selected_data = visits_tab_widgets[each_options + "_cb"] :proxy_enable_disable_EL(e,selected_data))
+            # else:
+            visits_tab_widgets[each_options+"_cb"].bind("<<ComboboxSelected>>", lambda e , selected_data = visits_tab_widgets[each_options + "_cb"], data_name=each_options :widget_selected_value_EL(e,selected_data,data_name))
 
         #SpinBox
-        elif tab_details["proxy"][each_options]["type"] == "sb":
-            proxy_widgets[each_options + "_sb"] = Spinbox(
-                proxy_widgets["cb_frame"],
+        elif tab_details["visits_tab"][each_options]["type"] == "sb":
+            visits_tab_widgets[each_options + "_sb"] = Spinbox(
+                visits_tab_widgets["cb_frame"],
                 width=35,
                 font=fonts_["cb"],
                 from_=0,
                 to=100,
             )
             # Default Value
-            proxy_widgets[each_options + "_sb"].delete(
+            visits_tab_widgets[each_options + "_sb"].delete(
                 0, "end"
             )  # Clear any existing value
-            proxy_widgets[each_options + "_sb"].insert(
-                0, int(tab_details["proxy"][each_options]["default"])
+            visits_tab_widgets[each_options + "_sb"].insert(
+                0, int(tab_details["visits_tab"][each_options]["default"])
             )  # Insert the default value
-            proxy_widgets[each_options + "_sb"]["state"] = "readonly"
+            visits_tab_widgets[each_options + "_sb"]["state"] = "readonly"
             # Placement
-            proxy_widgets[each_options + "_sb"].grid(row=index, column=2, ipadx=3)
+            visits_tab_widgets[each_options + "_sb"].grid(row=index, column=2, ipadx=3)
 
             # Actions
-            proxy_widgets[each_options+"_sb"]["command"] = lambda  selected_data = proxy_widgets[each_options+"_sb"] , data_name=each_options : widget_selected_value(selected_data,data_name)
+            visits_tab_widgets[each_options+"_sb"]["command"] = lambda  selected_data = visits_tab_widgets[each_options+"_sb"] , data_name=each_options : widget_selected_value(selected_data,data_name)
 
         #EntryBox
-        elif tab_details["proxy"][each_options]["type"] == "entry":
-            proxy_widgets[each_options + "_entry"] = Entry( proxy_widgets["cb_frame"], width=34, font=fonts_["cb"],)
+        elif tab_details["visits_tab"][each_options]["type"] == "entry":
+            visits_tab_widgets[each_options + "_entry"] = Entry( visits_tab_widgets["cb_frame"], width=34, font=fonts_["cb"],)
             # Default Value
-            proxy_widgets[each_options+"_entry"].delete(0, "end")  # Clear any existing value
+            visits_tab_widgets[each_options+"_entry"].delete(0, "end")  # Clear any existing value
             # Placement
-            proxy_widgets[each_options + "_entry"].grid(row=index, column=2, ipadx=0, sticky=W)
+            visits_tab_widgets[each_options + "_entry"].grid(row=index, column=2, ipadx=0, sticky=W)
             # Actions
-            proxy_widgets[each_options + "_entry"].bind("<KeyRelease>", lambda e , selected_data = proxy_widgets[each_options + "_entry"] , data_name=each_options :widget_selected_value_EL(e,selected_data,data_name))
+            visits_tab_widgets[each_options + "_entry"].bind("<KeyRelease>", lambda e , selected_data = visits_tab_widgets[each_options + "_entry"] , data_name=each_options :widget_selected_value_EL(e,selected_data,data_name))
             
             
-            if  tab_details["proxy"][each_options]['browse'] == True:
+            if  tab_details["visits_tab"][each_options]['browse'] == True:
                 text_img = Image.open("res/list.png")
                 text_img = text_img.resize((24, 24), Image.LANCZOS)
                 text_img = ImageTk.PhotoImage(text_img)
 
-                proxy_widgets[each_options + "_entry_browse_btn"] = Button(
-                    proxy_widgets["cb_frame"],
+                visits_tab_widgets[each_options + "_entry_browse_btn"] = Button(
+                    visits_tab_widgets["cb_frame"],
                     text="Hi",
                     image= text_img,
                     background=GUI_SETTINGS["c"]["body"]["work"]["bg"],
@@ -354,18 +353,18 @@ def proxy_tab(base_frame, dimension):
                     borderwidth=0,
                     highlightthickness=0,
                 )
-                proxy_widgets[each_options + "_entry_browse_btn"].image = text_img
-                proxy_widgets[each_options + "_entry_browse_btn"].grid(row=index, column=2, ipadx=0, sticky=E)
+                visits_tab_widgets[each_options + "_entry_browse_btn"].image = text_img
+                visits_tab_widgets[each_options + "_entry_browse_btn"].grid(row=index, column=2, ipadx=0, sticky=E)
                 
                 # Actions
-                proxy_widgets[each_options + "_entry_browse_btn"]['command'] = lambda entry_widget = proxy_widgets[each_options + "_entry"] , data_name = each_options : open_file_dialog(entry_widget,data_name)
+                visits_tab_widgets[each_options + "_entry_browse_btn"]['command'] = lambda entry_widget = visits_tab_widgets[each_options + "_entry"] , data_name = each_options : open_file_dialog(entry_widget,data_name)
 
                 
     
     
     
     #Default Selection
-    proxy_enable_disable("No")
+    # proxy_enable_disable("No")
     #Default Instruction
     store_instruction()
     
@@ -375,6 +374,6 @@ def proxy_tab(base_frame, dimension):
 
 if __name__ == "__main__":
     root = Tk()
-    proxy_tab(root)
+    visits_tab(root)
 
     root.mainloop()

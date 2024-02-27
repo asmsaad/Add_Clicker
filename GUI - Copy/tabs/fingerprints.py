@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import ttk
-from tabs.res import *
 
 
 tab_details = {
@@ -64,21 +63,13 @@ def fingerprints_tab(base_frame, dimension):
     
     
     def show_hide_percentage_entry(e):
-        #Store Instraction
-        store_instruction()
-        store_instruction()
-        store_instruction()
-        store_instruction()
+        print(fingerprints_widgets["device_type_cb"].get())
         
         selected_fingerprints = fingerprints_widgets["device_type_cb"].get()
         if selected_fingerprints == 'Mobile':
             fingerprints_widgets["desktop_percentage_label_placeholder"].grid_forget()
             fingerprints_widgets["desktop_percentage_label"].grid_forget()
             fingerprints_widgets["desktop_percentage_cb"].grid_forget()
-            fingerprints_widgets["desktop_percentage_cb"]['state']=NORMAL
-            fingerprints_widgets["desktop_percentage_cb"].delete(0, "end")
-            fingerprints_widgets["desktop_percentage_cb"].insert(0, 0)
-            fingerprints_widgets["desktop_percentage_cb"]['state']=DISABLED
             
             fingerprints_widgets["mobile_percentage_label_placeholder"].grid(row=1, column=1,ipady=10)
             fingerprints_widgets["mobile_percentage_label"].grid(row=1, column=1, sticky="e",ipadx=10)
@@ -92,10 +83,6 @@ def fingerprints_tab(base_frame, dimension):
             fingerprints_widgets["mobile_percentage_label_placeholder"].grid_forget()
             fingerprints_widgets["mobile_percentage_label"].grid_forget()
             fingerprints_widgets["mobile_percentage_cb"].grid_forget()
-            fingerprints_widgets["mobile_percentage_cb"]['state']=NORMAL
-            fingerprints_widgets["mobile_percentage_cb"].delete(0, "end")
-            fingerprints_widgets["mobile_percentage_cb"].insert(0, 0)
-            fingerprints_widgets["mobile_percentage_cb"]['state']=DISABLED
             
             fingerprints_widgets["desktop_percentage_label_placeholder"].grid(row=2, column=1,ipady=10)
             fingerprints_widgets["desktop_percentage_label"].grid(row=2, column=1, sticky="e",ipadx=10)
@@ -170,14 +157,6 @@ def fingerprints_tab(base_frame, dimension):
         fingerprints_widgets["desktop_percentage_cb"].insert(0, 100-int(fingerprints_widgets["mobile_percentage_cb"].get()))  # Insert the default value
         fingerprints_widgets["desktop_percentage_cb"]["state"] = 'readonly' 
 
-        #Store Instraction
-        store_instruction()
-
-    def store_instruction():
-        # print(json.dumps(selected_param_data, indent=4))  
-        # print('>>> ',f'-fpm {str(fingerprints_widgets["mobile_percentage_cb"].get())} -fpd {str(fingerprints_widgets["desktop_percentage_cb"].get())}', '<<<')
-        update_command_log("Fingerprints",f'-fpm {str(fingerprints_widgets["mobile_percentage_cb"].get())} -fpd {str(fingerprints_widgets["desktop_percentage_cb"].get())}')
-
     fingerprints_widgets["percentage_frame"] = Frame(
         fingerprints_tab_frame,
         background=GUI_SETTINGS["c"]["body"]["work"]["bg"] , border=0, borderwidth=0 , highlightthickness=0,
@@ -188,9 +167,9 @@ def fingerprints_tab(base_frame, dimension):
     fingerprints_widgets["mobile_percentage_label_placeholder"] = Label(
         fingerprints_widgets["percentage_frame"],
         width=35,
-        # background="green",
+        background="green",
         font=fonts_["cb"],
-        background=GUI_SETTINGS["c"]["body"]["work"]["bg"] , 
+        # background=GUI_SETTINGS["c"]["body"]["work"]["bg"] , 
         border=0, borderwidth=0 , highlightthickness=0,
         foreground='white'
     )
@@ -261,9 +240,7 @@ def fingerprints_tab(base_frame, dimension):
     fingerprints_widgets["desktop_percentage_cb"]["state"] = 'readonly'
    
    
-    #Default Value
-    #Store Instraction
-    store_instruction()
+    
    
 
 
@@ -272,7 +249,7 @@ def fingerprints_tab(base_frame, dimension):
 
 if __name__ == "__main__":
     root = Tk()
-    fingerprints_tab(root)
+    fingerprints(root)
 
     root.mainloop()
 

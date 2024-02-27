@@ -8,15 +8,6 @@ from tabs.proxy import proxy_tab
 from tabs.main_tab import main_tab
 from tabs.visits_tab import visits_tab
 from tabs.emulation_tab import emulation_tab
-from tabs.utility_tab import utility_tab
-from tabs.res import *
-
-
-
-
-
-making_command_log_formate()
-
 
 
 # Change 'Helvetica' to your desired font family, 12 is the font size, 'bold' is the font weight
@@ -112,15 +103,13 @@ footer_frame.pack(fill=X)
 
 app_tab_list = [
     "Main",
-    # "Visits",
+    "Visits",
     "Emulation",
     "Proxy",
-    # "Profiles",
+    "Profiles",
     "Fingerprints",
-    # "Captcha",
-    # "Timeouts",
-    # "Timeouts",
-    'Utility',
+    "Captcha",
+    "Timeouts",
 ]
 
 selected_tab = app_tab_list[0].lower()
@@ -140,7 +129,7 @@ def get_current_selected_tab(tab_name):
             tab_working_frame[each_tab_name].pack(side=RIGHT, expand=False)
             
         else:
-            # print("x ", each_tab_name)
+            print("x ", each_tab_name)
             app_tab_widges[each_tab_name].configure(
                 background=GUI_SETTINGS["c"]["body"]["tabs"]["b"]["bg"],
                 foreground=GUI_SETTINGS["c"]["body"]["tabs"]["b"]["fg"],
@@ -184,7 +173,7 @@ for index, each_tab_name in enumerate(app_tab_list):
     ] = lambda tab_name=each_tab_name.lower(): get_current_selected_tab(tab_name)
 
 Label(
-    tab_frame, background=GUI_SETTINGS["c"]["body"]["tabs"]["bg"], padx=80, pady=85 +40
+    tab_frame, background=GUI_SETTINGS["c"]["body"]["tabs"]["bg"], padx=80, pady=85-30
 ).grid(row=index + 1, column=1)
 
 
@@ -207,8 +196,6 @@ for tab_name in app_tab_list:
     #
     elif tab_name == "captcha": main_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
     elif tab_name == "timeouts": main_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
-
-    elif tab_name == "utility": utility_tab(tab_working_frame[tab_name],GUI_SETTINGS["d"]["body"]["work"])
     
     # main_tab_frame.pack(side=RIGHT, expand=False)
 
@@ -312,7 +299,7 @@ scheduler_BTN.pack(side=RIGHT, padx=5, pady=0)
 
 ok_BTN = Button(
     footer_right_frame,
-    text="Cancel",
+    text="Ok",
     width=15,
     height=10,
     font=GUI_SETTINGS["f"]["footer"],
@@ -326,7 +313,7 @@ ok_BTN = Button(
 ok_BTN.pack(side=LEFT, padx=5, pady=0)
 cancel_BTN = Button(
     footer_right_frame,
-    text="Ok",
+    text="Cancel",
     width=15,
     height=10,
     font=GUI_SETTINGS["f"]["footer"],

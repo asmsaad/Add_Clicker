@@ -1,0 +1,7 @@
+{
+    "Main": "python ad_clicker.py -q \"asda\" -e \"sa\" -bc 6 -ms 1 -wt 4",
+    "Proxy": "-p 10:",
+    "Emulation": "-l 13",
+    "Fingerprints": "-fpm 51 -fpd 49",
+    "Utility": "--incognito --headless"
+}

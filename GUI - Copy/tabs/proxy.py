@@ -3,7 +3,6 @@ from tkinter import filedialog
 from tkinter import ttk
 from PIL import Image, ImageTk
 import os,json
-from tabs.res import *
 
 # tab_details = {
 #     "fingerprints": {"Device types": ["Mobile + Desktop", "Desktop", "Mobile"]}
@@ -241,9 +240,8 @@ def proxy_tab(base_frame, dimension):
                 
                 
     def store_instruction():
-        # print(json.dumps(selected_param_data, indent=4))  
-        # print('>>> ',making_instruction(), '<<<')
-        update_command_log("Proxy",making_instruction())
+        print(json.dumps(selected_param_data, indent=4))  
+        print('>>> ',making_instruction(), '<<<')
                       
                         
                     

@@ -3,7 +3,6 @@ from tkinter import filedialog
 from tkinter import ttk
 from PIL import Image, ImageTk
 import os,json
-from tabs.res import *
 
 # tab_details = {
 #     "fingerprints": {"Device types": ["Mobile + Desktop", "Desktop", "Mobile"]}
@@ -17,17 +16,14 @@ a={
 
 tab_details = {
     "main": {
-        "Run in Loop": {"type": "cb", "values": ["Yes","No"], "default": "No"},
-        # "Mode": {"type": "cb", "values": ["Any sites"], "default": "Any sites"},
+        "Mode": {"type": "cb", "values": ["Any sites"], "default": "Any sites"},
         "Keywords" : {"type": "entry","browse":True,"browse_file_type":'',"initial_loc":"./../../"},
-        # "Chance of error %" : {"type": "sb", "default": "1" , "from":'0', 'to': '100'},
-        # "Number of clicks" : {"type": "sb", "default": "30" , "from":'1', 'to': '100'},
+        "Chance of error %" : {"type": "sb", "default": "1" , "from":'0', 'to': '100'},
+        "Number of clicks" : {"type": "sb", "default": "30" , "from":'1', 'to': '100'},
         "Domains that will be ignored" : {"type": "entry","browse":True,"browse_file_type":'',"initial_loc":"./../../"},
-        # "Click option": {"type": "cb", "values": ["Google Shope + Context"], "default": "Google Shope + Context"},
-        # "Click on the phone number": {"type": "cb", "values": ["Yes", "No"], "default": "No"},
-        "Wait between runs (Sec.)" : {"type": "sb", "default": "0", "from":'0', 'to': '1000'},
-        "Browser count" : {"type": "sb", "default": "5", "from":'5', 'to': '20'},
-        "Threads" : {"type": "sb", "default": "1", "from":'1', 'to': '2'}
+        "Click option": {"type": "cb", "values": ["Google Shope + Context"], "default": "Google Shope + Context"},
+        "Click on the phone number": {"type": "cb", "values": ["Yes", "No"], "default": "No"},
+        "Threads" : {"type": "sb", "default": "1", "from":'1', 'to': '20'}
     }
 }
 
@@ -79,13 +75,14 @@ GUI_SETTINGS = {
 def main_tab(base_frame, dimension):
     
     selected_param_data = {
-        "Run in Loop": "No",
+        "Mode": "Any sites",
         "Keywords" : "",
+        "Chance of error %" : "1",
+        "Number of clicks" : "30",
         "Domains that will be ignored" : "",
-        "Wait between runs (Sec.)" : "0",
-        "Browser count": "5",
+        "Click option": "Google Shope + Context",
+        "Click on the phone number": "No",
         "Threads" : "1"
-        
     }
     
     
@@ -219,78 +216,33 @@ def main_tab(base_frame, dimension):
         
         
     def making_instruction(): 
-        # selected_param_data = {
-        #     "Run in Loop": "No",
-        #     "Keywords" : "",
-        #     "Domains that will be ignored" : "",
-        #     "Browser count": "5",
-        #     "Threads" : "1"
-        # }
-
+        return ""
         
-        command_text = {
-            "file_name" : "",
-            "query" : "",
-            "excludes_text" : "",
-            "browser_count" : "",
-            "threads" : "",
-            "Wait between runs (Sec.)" : "0"
-
-        }
-
-
-        #Loop ? / !
-        if selected_param_data["Run in Loop"] == "No":
-            command_text["file_name"] = "python ad_clicker.py"
-        else:
-            command_text["file_name"] = "python run_in_loop.py"
-
-        # Search Query
-        if os.path.isfile(str(selected_param_data["Keywords"]).strip()):
-            command_text["query"] = f"-qf {str(selected_param_data['Keywords']).strip()}"
-        else:
-            command_text["query"] = '-q "'+ str(selected_param_data['Keywords']).strip() + '"'
-
-        # Browser Count
-        command_text["browser_count"] = f'-bc {str(selected_param_data["Browser count"]).strip()}'
-
-        # Multiprocess style
-        command_text["threads"] = f"-ms {str(selected_param_data['Threads']).strip()}"
-
-        # Exclude Word
-        if os.path.isfile(str(selected_param_data["Domains that will be ignored"]).strip()):
-            with open(str(selected_param_data["Domains that will be ignored"]).strip() , 'r') as RF:
-                exclude_word = RF.read()
-            RF.close()
-            exclude_word = exclude_word.replace('\n'," ")
-            command_text["excludes_text"] = f'-e "{exclude_word}"'
-        elif str(selected_param_data["Domains that will be ignored"]).strip() == "":
-            command_text["excludes_text"] = ""
-        else:
-            command_text["excludes_text"] = f'-e "' + str(selected_param_data['Domains that will be ignored']).strip() + '"'
-
-        # Wait between runs (Sec.) 
-        if str(selected_param_data["Wait between runs (Sec.)"]).strip() == "0":
-            command_text["Wait between runs (Sec.)"] = ""
-        else:
-            command_text["Wait between runs (Sec.)"] = "-wt "+ str(selected_param_data["Wait between runs (Sec.)"]).strip()
-
-
-
-        generated_command = []
-        for each_command in command_text:
-            generated_command.append(command_text[each_command])
-        
-        return " ".join(generated_command)
-        
+        if selected_param_data["Use proxy"] == "No":
+            return ""
+        else: 
+            if selected_param_data["Proxy format"] == "host:port":
+                if os.path.isfile(str(selected_param_data["Proxy"]).strip()):
+                    return f"-pf {str(selected_param_data['Proxy']).strip()}"
+                elif str(selected_param_data["Proxy"]).strip() == "":
+                    return ""
+                else:
+                    return f"-p {str(selected_param_data['Proxy']).strip()}"
+                    
+            elif selected_param_data["Proxy format"] == "username:password@host:port":
+                if os.path.isfile(str(selected_param_data["Proxy"]).strip()):
+                    return f"--auth -pf {str(selected_param_data['Proxy']).strip()}"
+                elif str(selected_param_data["Proxy"]).strip() == "":
+                    return ""
+                else:
+                    return f"--auth -p {str(selected_param_data['Proxy']).strip()}"
                 
             
                 
                 
     def store_instruction():
-        # print(json.dumps(selected_param_data, indent=4))  
-        # print('>>> ',making_instruction(), '<<<')
-        update_command_log("Main",making_instruction())
+        print(json.dumps(selected_param_data, indent=4))  
+        print('>>> ',making_instruction(), '<<<')
                       
                         
                     
@@ -358,12 +310,16 @@ def main_tab(base_frame, dimension):
                 main_tab_widgets["cb_frame"],
                 width=35,
                 font=fonts_["cb"],
-                from_=tab_details["main"][each_options]["from"],
-                to=tab_details["main"][each_options]["to"],
+                from_=0,
+                to=100,
             )
             # Default Value
-            main_tab_widgets[each_options + "_sb"].delete( 0, "end")  # Clear any existing value
-            main_tab_widgets[each_options + "_sb"].insert(0, int(tab_details["main"][each_options]["default"]))  # Insert the default value
+            main_tab_widgets[each_options + "_sb"].delete(
+                0, "end"
+            )  # Clear any existing value
+            main_tab_widgets[each_options + "_sb"].insert(
+                0, int(tab_details["main"][each_options]["default"])
+            )  # Insert the default value
             main_tab_widgets[each_options + "_sb"]["state"] = "readonly"
             # Placement
             main_tab_widgets[each_options + "_sb"].grid(row=index, column=2, ipadx=3)

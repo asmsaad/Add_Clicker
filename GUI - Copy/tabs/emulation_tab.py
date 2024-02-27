@@ -3,7 +3,6 @@ from tkinter import filedialog
 from tkinter import ttk
 from PIL import Image, ImageTk
 import os,json
-from tabs.res import *
 
 # tab_details = {
 #     "fingerprints": {"Device types": ["Mobile + Desktop", "Desktop", "Mobile"]}
@@ -21,13 +20,12 @@ a={
 
 tab_details = {
     "emulation_tab": {
-        # "Emulation type" : {"type": "cb", "values": ["Automatic"], "default": "Automatic"},
-        # "Chance of scrolling through paragraphs %" : {"type": "sb", "default": "80" , "from":'0', 'to': '100'},
-        # "Max. scrolling time (sec.)" : {"type": "sb", "default": "60" , "from":'0', 'to': '100'},
-        "Max. scroll Limit (0 for scroll untill end)" : {"type": "sb", "default": "0" , "from":'0', 'to': '100'},
-        # "Chance of paragraph selection %" : {"type": "sb", "default": "40" , "from":'0', 'to': '100'},
-        # "Chance of double clicking on a paragraph %" : {"type": "sb", "default": "80" , "from":'0', 'to': '100'},
-        # "Chance of being added to bookmarks" : {"type": "sb", "default": "50" , "from":'0', 'to': '100'},
+        "Emulation type" : {"type": "cb", "values": ["Automatic"], "default": "Automatic"},
+        "Chance of scrolling through paragraphs %" : {"type": "sb", "default": "80" , "from":'0', 'to': '100'},
+        "Max. scrolling time (sec.)" : {"type": "sb", "default": "60" , "from":'0', 'to': '100'},
+        "Chance of paragraph selection %" : {"type": "sb", "default": "40" , "from":'0', 'to': '100'},
+        "Chance of double clicking on a paragraph %" : {"type": "sb", "default": "80" , "from":'0', 'to': '100'},
+        "Chance of being added to bookmarks" : {"type": "sb", "default": "50" , "from":'0', 'to': '100'},
     }
 }
 
@@ -79,13 +77,12 @@ GUI_SETTINGS = {
 def emulation_tab(base_frame, dimension):
     
     selected_param_data = {
-        # "Emulation type" : "Automatic",
-        # "Chance of scrolling through paragraphs %" : "80",
-        # "Max. scrolling time (sec.)" : "60",
-        # "Chance of paragraph selection %" : "40",
-        # "Chance of double clicking on a paragraph %" : "80",
-        # "Chance of being added to bookmarks" : "50",
-        "Max. scroll Limit (0 for scroll untill end)" : "0"
+        "Emulation type" : "Automatic",
+        "Chance of scrolling through paragraphs %" : "80",
+        "Max. scrolling time (sec.)" : "60",
+        "Chance of paragraph selection %" : "40",
+        "Chance of double clicking on a paragraph %" : "80",
+        "Chance of being added to bookmarks" : "50",
     }
     
     
@@ -219,16 +216,33 @@ def emulation_tab(base_frame, dimension):
         
         
     def making_instruction(): 
-        return f"-l {selected_param_data['Max. scroll Limit (0 for scroll untill end)']}"
+        return ""
         
-     
+        if selected_param_data["Use proxy"] == "No":
+            return ""
+        else: 
+            if selected_param_data["Proxy format"] == "host:port":
+                if os.path.isfile(str(selected_param_data["Proxy"]).strip()):
+                    return f"-pf {str(selected_param_data['Proxy']).strip()}"
+                elif str(selected_param_data["Proxy"]).strip() == "":
+                    return ""
+                else:
+                    return f"-p {str(selected_param_data['Proxy']).strip()}"
+                    
+            elif selected_param_data["Proxy format"] == "username:password@host:port":
+                if os.path.isfile(str(selected_param_data["Proxy"]).strip()):
+                    return f"--auth -pf {str(selected_param_data['Proxy']).strip()}"
+                elif str(selected_param_data["Proxy"]).strip() == "":
+                    return ""
+                else:
+                    return f"--auth -p {str(selected_param_data['Proxy']).strip()}"
+                
             
                 
                 
     def store_instruction():
-        # print(json.dumps(selected_param_data, indent=4))  
-        # print('>>> ',making_instruction(), '<<<')
-        update_command_log("Emulation",making_instruction())
+        print(json.dumps(selected_param_data, indent=4))  
+        print('>>> ',making_instruction(), '<<<')
                       
                         
                     
