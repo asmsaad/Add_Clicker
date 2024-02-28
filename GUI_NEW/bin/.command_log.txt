@@ -1,8 +1,8 @@
 {
-    "Main": "python ad_clicker.py -q \"tes\"  ",
+    "Main": "python run_in_loop.py -q \"\"  ",
     "Proxy": "",
     "Proxy required": "-bc 5 -ms 1",
     "Emulation": "",
     "Fingerprints": "",
-    "Utility": " --headless"
+    "Utility": " "
 }
